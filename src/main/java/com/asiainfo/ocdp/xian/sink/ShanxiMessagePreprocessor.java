@@ -1,10 +1,12 @@
-package com.asiainfo.ocdp.sink;
+package com.asiainfo.ocdp.xian.sink;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.flume.Context;
 import org.apache.flume.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.asiainfo.ocdp.sink.MessagePreprocessor;
 
 /**
  * 西安4G接入到kafka的MessagePreprocessor实现类.

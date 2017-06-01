@@ -1,4 +1,12 @@
-package com.asiainfo.ocdp.source;
+package com.asiainfo.ocdp.xian.source;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.flume.Context;
 import org.apache.flume.Event;
@@ -10,14 +18,6 @@ import org.apache.log4j.Logger;
 
 import com.asiainfo.ocdp.common.Constants;
 import com.asiainfo.ocdp.socket.SocketServer;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by yangjing5 on 2016/4/18.
@@ -55,7 +55,7 @@ public class FlumeSdtpSource extends AbstractSource implements Configurable, Pol
 
 		for (String port : ports) {
 			logger.info("port is " + port);
-			new Thread(new SocketServer(port, "sdtp")).start();
+			new Thread(new SocketServer(port,msgQueue )).start();
 		}
 		logger.info("server socket,analysis task start...");
 	}

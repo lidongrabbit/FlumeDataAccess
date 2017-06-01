@@ -2,7 +2,9 @@ package com.asiainfo.ocdp.socket;
 
 import org.apache.log4j.Logger;
 
-import com.asiainfo.ocdp.source.FlumeSdtpSource;
+import com.asiainfo.ocdp.socket.SocketServer;
+import com.asiainfo.ocdp.socket.SocketUtil;
+import com.asiainfo.ocdp.xian.source.FlumeSdtpSource;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -13,17 +15,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Created by yangjing5 on 2016/4/22.
  */
-public class SdtpSocketAnalysisTask implements Runnable {
-    private final static Logger logger = Logger.getLogger(SdtpSocketAnalysisTask.class);
+public class SocketAnalysisTask implements Runnable {
+    private final static Logger logger = Logger.getLogger(SocketAnalysisTask.class);
     public static LinkedBlockingQueue<Socket> socketQueue;
     public static LinkedBlockingQueue<byte[]> msgQueue;
     private Socket socket;
     private static int xdrRawDataCount = 0;
 
 
-    public SdtpSocketAnalysisTask( Socket socket){
+    public SocketAnalysisTask( Socket socket, LinkedBlockingQueue<byte[]> msgQueue){
         this.socketQueue = SocketServer.socketQueue;
-        this.msgQueue = FlumeSdtpSource.msgQueue;
+        this.msgQueue = msgQueue;
         this.socket = socket;
     }
 

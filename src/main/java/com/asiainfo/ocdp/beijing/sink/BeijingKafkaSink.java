@@ -1,4 +1,4 @@
-package com.asiainfo.ocdp.sink;
+package com.asiainfo.ocdp.beijing.sink;
 
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.asiainfo.ocdp.common.Constants;
+import com.asiainfo.ocdp.sink.MessagePreprocessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,11 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- *自定义KafkaSink
+ * 北京KafkaSink
  */
-public class ShanxiKafkaSink extends AbstractSink implements Configurable {
+public class BeijingKafkaSink extends AbstractSink implements Configurable {
 
-	private static final Logger logger = LoggerFactory.getLogger(ShanxiKafkaSink.class);
+	private static final Logger logger = LoggerFactory.getLogger(BeijingKafkaSink.class);
 	private Properties producerProps;
 	private Producer<String, String> producer;
 	private MessagePreprocessor messagePreProcessor;
