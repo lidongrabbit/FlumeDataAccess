@@ -3,7 +3,6 @@ package com.asiainfo.ocdp.beijing.source;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -18,9 +17,9 @@ import org.apache.flume.event.EventBuilder;
 import org.apache.flume.source.AbstractSource;
 import org.apache.log4j.Logger;
 
+import com.asiainfo.ocdp.beijing.socket.BeijingSocketServer;
 import com.asiainfo.ocdp.common.Constants;
 import com.asiainfo.ocdp.common.ConvToByte;
-import com.asiainfo.ocdp.socket.SocketServer;
 
 /**
  * 数据源为二进制格式
@@ -42,7 +41,7 @@ public class BeijingMmeSource extends AbstractSource implements Configurable, Po
 			props.load(inputStream);
 			analysisNum = context.getInteger("maxworks",
 					Integer.parseInt(props.getProperty(Constants.ANALYSIS_THREAD_NUM)));
-			;
+
 			socketPort = context.getString("port", props.getProperty(Constants.SOCKETSERVER_PORT));
 			logger.info("socketPort =" + socketPort);
 			logger.info("load config [" + Constants.PROPERTIE_FILENAME + "]");
@@ -58,7 +57,7 @@ public class BeijingMmeSource extends AbstractSource implements Configurable, Po
 
 		for (String port : ports) {
 			logger.info("port is " + port);
-			new Thread(new SocketServer(port, msgQueue)).start();
+			new Thread(new BeijingSocketServer(port, "mme")).start();
 		}
 		logger.info("server socket,analysis task start...");
 	}

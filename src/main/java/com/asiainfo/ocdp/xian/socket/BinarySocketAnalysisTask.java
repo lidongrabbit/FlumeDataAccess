@@ -1,10 +1,4 @@
-package com.asiainfo.ocdp.socket;
-
-import org.apache.log4j.Logger;
-
-import com.asiainfo.ocdp.socket.SocketServer;
-import com.asiainfo.ocdp.socket.SocketUtil;
-import com.asiainfo.ocdp.xian.source.FlumeSdtpSource;
+package com.asiainfo.ocdp.xian.socket;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -12,20 +6,25 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.log4j.Logger;
+
+import com.asiainfo.ocdp.socket.SocketUtil;
+import com.asiainfo.ocdp.xian.source.FlumeBinarySource;
+
 /**
  * Created by yangjing5 on 2016/4/22.
  */
-public class SocketAnalysisTask implements Runnable {
-    private final static Logger logger = Logger.getLogger(SocketAnalysisTask.class);
+public class BinarySocketAnalysisTask implements Runnable {
+    private final static Logger logger = Logger.getLogger(BinarySocketAnalysisTask.class);
     public static LinkedBlockingQueue<Socket> socketQueue;
     public static LinkedBlockingQueue<byte[]> msgQueue;
     private Socket socket;
     private static int xdrRawDataCount = 0;
 
 
-    public SocketAnalysisTask( Socket socket, LinkedBlockingQueue<byte[]> msgQueue){
+    public BinarySocketAnalysisTask( Socket socket){
         this.socketQueue = SocketServer.socketQueue;
-        this.msgQueue = msgQueue;
+        this.msgQueue = FlumeBinarySource.msgQueue;
         this.socket = socket;
     }
 

@@ -16,8 +16,8 @@ import org.apache.flume.event.EventBuilder;
 import org.apache.flume.source.AbstractSource;
 import org.apache.log4j.Logger;
 
+import com.asiainfo.ocdp.beijing.socket.BeijingSocketServer;
 import com.asiainfo.ocdp.common.Constants;
-import com.asiainfo.ocdp.socket.SocketServer;
 
 /**
  * Created by yangjing5 on 2016/4/18.
@@ -55,7 +55,7 @@ public class BeijingMcSource extends AbstractSource implements Configurable, Pol
 
 		for (String port : ports) {
 			logger.info("port is " + port);
-			new Thread(new SocketServer(port, msgQueue)).start();
+			new Thread(new BeijingSocketServer(port, "mc")).start();
 		}
 		logger.info("server socket,analysis task start...");
 	}

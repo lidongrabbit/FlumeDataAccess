@@ -17,7 +17,7 @@ import org.apache.flume.source.AbstractSource;
 import org.apache.log4j.Logger;
 
 import com.asiainfo.ocdp.common.Constants;
-import com.asiainfo.ocdp.socket.SocketServer;
+import com.asiainfo.ocdp.xian.socket.SocketServer;
 
 /**
  * Created by yangjing5 on 2016/4/18.
@@ -55,7 +55,7 @@ public class FlumeSdtpSource extends AbstractSource implements Configurable, Pol
 
 		for (String port : ports) {
 			logger.info("port is " + port);
-			new Thread(new SocketServer(port,msgQueue )).start();
+			new Thread(new SocketServer(port, "sdtp")).start();
 		}
 		logger.info("server socket,analysis task start...");
 	}

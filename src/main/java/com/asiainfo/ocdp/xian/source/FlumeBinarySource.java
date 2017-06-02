@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 
 import com.asiainfo.ocdp.common.Constants;
 import com.asiainfo.ocdp.common.ConvToByte;
-import com.asiainfo.ocdp.socket.SocketServer;
+import com.asiainfo.ocdp.xian.socket.SocketServer;
 
 /**
  * 数据源为二进制格式
@@ -55,7 +55,7 @@ public class FlumeBinarySource extends AbstractSource implements Configurable, P
 
 		for (String port : ports) {
 			logger.info("port is " + port);
-			new Thread(new SocketServer(port, msgQueue)).start();
+			new Thread(new SocketServer(port, "binary")).start();
 		}
 		logger.info("server socket,analysis task start...");
 	}
