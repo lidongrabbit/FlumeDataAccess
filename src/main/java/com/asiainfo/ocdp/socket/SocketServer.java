@@ -1,4 +1,4 @@
-package com.asiainfo.ocdp.beijing.socket;
+package com.asiainfo.ocdp.socket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,15 +10,13 @@ import org.apache.log4j.Logger;
 /**
  * Created by yangjing5 on 2016/4/18.
  */
-public class BeijingSocketServer implements Runnable {
+public class SocketServer implements Runnable {
 	public static LinkedBlockingQueue<Socket> socketQueue = new LinkedBlockingQueue<Socket>(Integer.MAX_VALUE);
-	private final static Logger logger = Logger.getLogger(BeijingSocketServer.class);
+	private final static Logger logger = Logger.getLogger(SocketServer.class);
 	private String socketPort;
-	public String type;
 
-	public BeijingSocketServer(String port, String type) {
+	public SocketServer(String port) {
 		this.socketPort = port;
-		this.type = type;
 	}
 
 	// @Override
@@ -35,12 +33,8 @@ public class BeijingSocketServer implements Runnable {
 
 				socket = server.accept();
 				socket.setReceiveBufferSize(10 * 10240 * 1024);
-				if(type.equals("mme")){
-					new Thread(new MmeSocketAnalysisTask(socket)).start();
-				}else if(type.equals("mme")){
-					new Thread(new McSocketAnalysisTask(socket)).start();
-				}
-				
+				new Thread(new SdtpSocketAnalysisTask(socket)).start();
+
 			} catch (IOException e) {
 				logger.error("could not accept data from client", e);
 			}

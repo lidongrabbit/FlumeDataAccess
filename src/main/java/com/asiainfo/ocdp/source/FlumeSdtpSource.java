@@ -1,4 +1,4 @@
-package com.asiainfo.ocdp.beijing.source;
+package com.asiainfo.ocdp.source;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,14 +16,14 @@ import org.apache.flume.event.EventBuilder;
 import org.apache.flume.source.AbstractSource;
 import org.apache.log4j.Logger;
 
-import com.asiainfo.ocdp.beijing.socket.BeijingSocketServer;
 import com.asiainfo.ocdp.common.Constants;
+import com.asiainfo.ocdp.socket.SocketServer;
 
 /**
  * Created by yangjing5 on 2016/4/18.
  */
-public class BeijingMcSource extends AbstractSource implements Configurable, PollableSource {
-	private final static Logger logger = Logger.getLogger(BeijingMcSource.class);
+public class FlumeSdtpSource extends AbstractSource implements Configurable, PollableSource {
+	private final static Logger logger = Logger.getLogger(FlumeSdtpSource.class);
 	public static LinkedBlockingQueue<byte[]> msgQueue = new LinkedBlockingQueue<byte[]>(Integer.MAX_VALUE);
 	private int analysisNum = 100;
 	private String socketPort;
@@ -55,7 +55,7 @@ public class BeijingMcSource extends AbstractSource implements Configurable, Pol
 
 		for (String port : ports) {
 			logger.info("port is " + port);
-			new Thread(new BeijingSocketServer(port, "mc")).start();
+			new Thread(new SocketServer(port)).start();
 		}
 		logger.info("server socket,analysis task start...");
 	}
@@ -73,22 +73,13 @@ public class BeijingMcSource extends AbstractSource implements Configurable, Pol
 			flag++;
 			byte[] msg = msgQueue.take();
 			long startTime = System.currentTimeMillis();
-
-			logger.info("msg:" + msg);
 			String message = new String(msg);
-			logger.info("message:" + message);
-			logger.info("message index of \t:" + message.indexOf("\t"));
-			logger.info("message index of \r:" + message.indexOf("\r"));
-			logger.info("message index of \n:" + message.indexOf("\n"));
-			logger.info("message index of \r\n:" + message.indexOf("\r\n"));
 			String[] messages = message.split(Constants.MESSAGE_SEPARATOR);
-			// String[] messages = message.split(Constants.MESSAGE_SEPARATOR);
-			logger.info("message.size:" + messages.length);
 
 			for (String signalling : messages) {
 				Map<String, String> headers = new HashMap();
-				// 第3字段为imsi,作为key
-				String imsi = signalling.trim().split(Constants.HEADERS_KEY_SEPARATOR)[2];
+				// 第4字段为imsi,作为key
+				String imsi = signalling.trim().split(Constants.HEADERS_KEY_SEPARATOR)[3];
 				try {
 					headers.put(Constants.HEADERS_KEY, imsi);
 				} catch (StringIndexOutOfBoundsException e) {

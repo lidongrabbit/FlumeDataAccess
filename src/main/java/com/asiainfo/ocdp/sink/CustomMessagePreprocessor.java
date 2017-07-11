@@ -1,4 +1,4 @@
-package com.asiainfo.ocdp.xian.sink;
+package com.asiainfo.ocdp.sink;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.flume.Context;
@@ -6,13 +6,11 @@ import org.apache.flume.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.asiainfo.ocdp.sink.MessagePreprocessor;
-
 /**
  * 西安4G接入到kafka的MessagePreprocessor实现类.
  */
-public class ShanxiMessagePreprocessor implements MessagePreprocessor {
-	private static final Logger logger = LoggerFactory.getLogger(ShanxiMessagePreprocessor.class);
+public class CustomMessagePreprocessor implements MessagePreprocessor {
+	private static final Logger logger = LoggerFactory.getLogger(CustomMessagePreprocessor.class);
 
 	// @Override
 	public String extractKey(Event event, Context context) {
