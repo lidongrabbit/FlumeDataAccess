@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- *自定义KafkaSink
+ * 自定义KafkaSink，基于kafka0.8x版本
  */
 public class CustomKafkaSink extends AbstractSink implements Configurable {
 
@@ -59,6 +59,7 @@ public class CustomKafkaSink extends AbstractSink implements Configurable {
 				// key.
 				if (messagePreProcessor != null) {
 					eventBody = messagePreProcessor.transformMessage(eventBody);
+					topic = messagePreProcessor.extractTopic(event, context);
 					eventKey = messagePreProcessor.extractKey(event, context);
 				}
 				// log the event for debugging

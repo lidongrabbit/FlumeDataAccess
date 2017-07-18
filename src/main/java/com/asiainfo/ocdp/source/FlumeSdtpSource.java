@@ -78,7 +78,7 @@ public class FlumeSdtpSource extends AbstractSource implements Configurable, Pol
 
 			for (String signalling : messages) {
 				Map<String, String> headers = new HashMap();
-				// 第4字段为imsi,作为key
+				// 根据现场imsi位置设置flume的header的key
 				String imsi = signalling.trim().split(Constants.HEADERS_KEY_SEPARATOR)[3];
 				try {
 					headers.put(Constants.HEADERS_KEY, imsi);
